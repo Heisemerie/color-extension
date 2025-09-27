@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Color Extension",
+  "version": "1.0.0",
+  "icons": {
+    "48": "icon-48.png"
+  },
+  "action": { "default_popup": "index.html" },
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["http://*/*", "https://*/*"]
+}
