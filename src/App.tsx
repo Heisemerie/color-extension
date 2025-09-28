@@ -1,18 +1,22 @@
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [color, setColor] = useState<string>("");
+
   const onclick = async () => {
     // call chrome tab api for active tab
     let [tab] = await chrome.tabs.query({ active: true });
 
     // call chrome script api
     if (tab.id !== undefined) {
-      chrome.scripting.executeScript({
+      chrome.scripting.executeScript<string[], void>({
         target: { tabId: tab.id },
-        func: () => {
-          document.body.style.backgroundColor = "red";
+        args: [color],
+        func: (color) => {
+          document.body.style.backgroundColor = color;
         },
       });
     } else {
@@ -32,6 +36,7 @@ function App() {
       </div>
       <h1>Color Extension</h1>
       <div className="card">
+        <input type="color" onChange={(e) => setColor(e.currentTarget.value)} />
         <button onClick={() => onclick()}>Click Me!</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
